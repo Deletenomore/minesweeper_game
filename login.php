@@ -80,6 +80,15 @@
         <meta charset="UTF-8">
         <title>Login</title>
         <link rel="stylesheet" href="CSS/login.css">
+        <script>
+        // JavaScript to show a success message popup
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success')) {
+                alert('Sign up successfully!');
+            }
+        };
+    </script>
      </head>
      <body>
         <div>

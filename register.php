@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT);// Creates a password hash
             if(mysqli_stmt_execute($stmt)){
-                header("location: login.php");
+                header("location: login.php?success=1");
                 exit();
             }else{
                 echo "Error! Please try again later!";
