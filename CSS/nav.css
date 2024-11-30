@@ -1,12 +1,5 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f3f4f6; /* Optional light background for contrast */
-}/* General styling for the navigation bar */
+
+/* General styling for the navigation bar */
 
 nav {
   background-color: #6a0dad; /* Purple background */
