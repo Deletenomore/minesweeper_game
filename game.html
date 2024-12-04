@@ -83,9 +83,10 @@
       var minesLocation = [];
 
       var tilesClicked = 0; //goal to click all tiles except the ones containing mines
-      var flagStatus = false;
 
       var gameOver = false;
+
+      var hoveredTile = null;
 
 
       //Member functions for the game
@@ -148,6 +149,12 @@
             tile.style.height = `${tileHeight}px`;
             tile.style.fontSize = `${tileWidth / 2}px`; // Adjust font size dynamically
             tile.addEventListener('contextmenu', setFlag);
+            tile.addEventListener('mouseover', () => {
+              hoveredTile = tile;
+            });
+            tile.addEventListener('mouseout', () => {
+              hoveredTile = null;
+            })
             tile.addEventListener('click', clickTile);
             document.getElementById("gameboard").append(tile);
             row.push(tile);
@@ -352,12 +359,26 @@
       });
     }
 
+  
+    document.addEventListener('keydown', (event) => {
+      if ((event.key === 'm' || event.key === 'M') && hoveredTile) {
+        // Create a custom context menu event
+        const contextMenuEvent = new MouseEvent('contextmenu', {
+          bubbles: true, 
+          cancelable: true, 
+          view: window,
+        });
+
+        hoveredTile.dispatchEvent(contextMenuEvent); // Dispatch the event
+      }
+    });
+
     //Initialize sounds when the page loads
     window.addEventListener('load', initializeSounds);
 
-  </script>
+    </script>
  
-   </body>
+  </body>
    
- </html>
+</html>
  
