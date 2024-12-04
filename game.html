@@ -40,6 +40,36 @@
      <button id="meidum" onclick="setLevel('intermediate')">INTERMEDIATE</button>
      <button id="hard" onclick="setLevel('hard')">HARD</button>
 
+     <!-- Sound Elements -->
+     <audio id="backgroundMusic" loop>
+      <source src="sounds/background.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="clickSound">
+      <source src="sounds/click.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="mineSound">
+      <source src="sounds/mine.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="gameOverSound">
+      <source src="sounds/gameover.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="winSound">
+      <source src="sounds/win.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Volume Control -->
+    <div>
+      <label for="backgroundMusicVolume">Background Music Volume:</label>
+      <input type="range" id="backgroundMusicVolume" min="0" max="1" step="0.1" value="0.5">
+      
+      <label for="sfxVolume">Sound Effects Volume:</label>
+      <input type="range" id="sfxVolume" min="0" max="1" step="0.1" value="0.5">
+    </div>
 
      
      <script type="text/javascript" defer>
@@ -90,6 +120,12 @@
       // }
       
       function startGame(){
+        //Play background music
+        if(backgroundMusic){
+          backgroundMusic.currentTime = 0;
+          backgroundMusic.play();
+        }
+
         gameboard = []; // Reset the gameboard array
         const gameboardElement = document.getElementById("gameboard");
         gameboardElement.innerHTML = ""; // Clear existing tiles
@@ -155,6 +191,16 @@
 
 
     function revealMines(){
+       // Play game over sound
+       if (gameOverSound) {
+          gameOverSound.play();
+        }
+
+        // Stop background music
+        if (backgroundMusic) {
+          backgroundMusic.pause();
+        }
+
       for(let r = 0; r<rows; r++){
         for(let c = 0; c<cols; c++){
           let tile = gameboard[r][c];
@@ -168,12 +214,26 @@
 
     //Function to handle the event when click the tile.
     function clickTile(){
+
+      // Play click sound
+      if (clickSound) {
+          clickSound.currentTime = 0;
+          clickSound.play();
+        }
+
+
       if(gameOver || this.classList.contains("tile-clicked")){
         return;
       }
 
       let tile = this;
+      if(tile.innerText === ""){
       if(minesLocation.includes(tile.id)){
+        // Play mine hit sound
+        if (mineSound) {
+          mineSound.play();
+        }
+
         alert("GAME OVER");
         gameOver = true;
         revealMines();
@@ -184,6 +244,7 @@
       let r = parseInt(coords[0]); //coordinate for row
       let c = parseInt(coords[1]); // coordinate for column
       checkMine(r, c);
+    }
 
     };
 
@@ -238,6 +299,15 @@
       if(tilesClicked == rows*cols-mineCount){
         document.getElementById("mine_count").innerText = "Congratulations! You Won! Mines Cleared";
         gameOver = true;
+        // Play win sound
+        if (winSound) {
+          winSound.play();
+        }
+
+        // Stop background music
+        if (backgroundMusic) {
+          backgroundMusic.pause();
+          }
       }
     } 
 
@@ -252,7 +322,40 @@
 
     }
 
-     </script>
+    //Sound section
+    var backgroundMusic = null;
+    var clickSound = null;
+    var mineSound = null;
+    var gameOverSound = null;
+    var winSound = null;
+
+    function initializeSounds(){
+      backgroundMusic = document.getElementById('backgroundMusic');
+      clickSound = document.getElementById('clickSound');
+      mineSound = document.getElementById('mineSound');
+      gameOverSound = document.getElementById('gameOverSound');
+      windSound = document.getElementById('windSound');
+
+      //Set up volumn controls
+      const backgroundMusicVolume = document.getElementById('backgroundMusicVolume');
+      const sfxVolume = document.getElementById('sfxVolume');
+
+      backgroundMusicVolume.addEventListener('input', function(){
+        backgroundMusic.volume = this.value;
+      });
+
+      sfxVolume.addEventListener('input', function(){
+        clickSound.volume = this.value;
+        mineSound.volume = this.value;
+        gameOverSound.volume = this.value;
+        winSound.volume = this.value;
+      });
+    }
+
+    //Initialize sounds when the page loads
+    window.addEventListener('load', initializeSounds);
+
+  </script>
  
    </body>
    
