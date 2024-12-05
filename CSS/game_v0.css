@@ -1,0 +1,146 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+div h1, h3, h4 {
+  display: block;  /* Ensure headers stay block-level */
+  margin-bottom: 1rem;  /* Adds space below headers */
+}
+
+
+#gameboard {
+  border: 10px solid darkgray;
+  background-color: lightgrey;
+  margin: 0 auto;
+  display: flex; 
+  flex-wrap: wrap;
+}
+
+#gameboard div{
+  /* width: 48px;
+  height:48px; */
+  border:1px solid whitesmoke;
+
+  /* text */
+  /* font-size: 30px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.tile-clicked{
+  background:black;
+}
+
+.x1{
+  color: blue;
+}
+
+.x2{
+  color:green
+}
+
+.x3{
+  color:red
+}
+
+.x4{
+  color:navy;
+}
+
+.x5{
+  color:brown;
+}
+
+.x6{
+  color:teal;
+}
+
+.x7{
+  color:black;
+}
+
+.x8{
+  color:gray;
+}
+
+.game-container {
+  background-color:rgba(255, 255, 180, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 90%;
+  max-width: 1500px;
+  margin-top: 6rem;
+  transition: transform 0.3s ease;
+}
+
+.game-header {
+  margin-bottom: 2rem;
+}
+
+.game-header h1 {
+  color: #6a0dad;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.player-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.difficulty-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.difficulty-buttons button {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.difficulty-buttons button:hover {
+  background-color: #4e008d;
+  transform: scale(1.05);
+}
+
+.volume-controls {
+  background-color: #f4f4f9;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.volume-controls label {
+  color: #6a0dad;
+  margin-bottom: 0.5rem;
+}
+
+.volume-controls input[type="range"] {
+  width: 100%;
+  accent-color: #6a0dad;
+}

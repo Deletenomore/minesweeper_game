@@ -12,33 +12,39 @@
      <meta charset="UTF-8"> <!-- Fixed charset typo -->
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="CSS/nav.css"/>
-     <link rel="stylesheet" href="CSS/game.css"/>
+     <link rel="stylesheet" href="CSS/game_v2.css"/>
      
    </head>
    <body>
      <nav>
        <ul>
-         <li><a href="index.html">HOME</a></li>
-         <li><a href="login.html">LOGIN</a></li>
+         <li><a href="index.php">HOME</a></li>
+         <li><a href="login.php">LOGIN</a></li>
          <li><a href="game.html">GAME</a></li>
          <li><a href="leaderboard.html">LEADERBOARD</a></li>
          <li><a href="help.html">HELP</a></li>
          <li><a href="contact.html">CONTACT</a></li>
        </ul>
      </nav>
- 
-     <h1>Let's Play the Minesweeper Game!</h1>
-    <h3>Player: <span id="gamer" name = "gamer"></span></h3>
-     <h4>Mines: <span id="mine_count">0</span></h4>
-
- 
-     <div id="gameboard" style="display: none;"></div>
-    
-     <br>
-
-     <button id="easy" onclick="setLevel('easy')">EASY</button>
-     <button id="meidum" onclick="setLevel('intermediate')">INTERMEDIATE</button>
-     <button id="hard" onclick="setLevel('hard')">HARD</button>
+     <div class="game-container">
+      <div class="game-header">
+          <h1>Let's Play the Minesweeper Game!</h1>
+      </div>
+      <div class="player-info">
+          <h3>Player: <span id="gamer" name="gamer"></span></h3>
+          <h4>Mines: <span id="mine_count">0</span></h4>
+      </div>
+      <div id="gameboard" style="display: none;"></div>
+      <div class="difficulty-buttons">
+          <button id="easy" onclick="setLevel('easy')">EASY</button>
+          <button id="intermediate" onclick="setLevel('intermediate')">INTERMEDIATE</button>
+          <button id="hard" onclick="setLevel('hard')">HARD</button>
+          <button id="hard" onclick="cheatMode()">Cheat Mode</button>
+      </div>
+      <div class="restart-container">
+          <button id="restart" onclick="restartGame()">RESTART</button>
+      </div>
+    </div>
 
      <!-- Sound Elements -->
      <audio id="backgroundMusic" loop>
@@ -63,7 +69,7 @@
     </audio>
 
     <!-- Volume Control -->
-    <div>
+    <div class="volume-controls">
       <label for="backgroundMusicVolume">Background Music Volume:</label>
       <input type="range" id="backgroundMusicVolume" min="0" max="1" step="0.1" value="0.5">
       
@@ -78,20 +84,18 @@
       var gameboard = [];
       var rows=0;
       var cols = 0;
-
       var mineCount = 0;
       var minesLocation = [];
-
       var tilesClicked = 0; //goal to click all tiles except the ones containing mines
-
       var gameOver = false;
-
       var hoveredTile = null;
+      var currentLevel = '';
 
 
       //Member functions for the game
 
       function setLevel(level){
+        gameOver = false;
         document.getElementById("gameboard").style.display = "flex";
         if(level === 'easy'){
           rows = 8;
@@ -99,6 +103,7 @@
           mineCount = 8;
           document.getElementById("gameboard").style.width = "400px";
           document.getElementById("gameboard").style.height = "400px";
+          currentLevel = 'easy'
           
         } else if (level === 'intermediate'){
           rows = 16;
@@ -106,19 +111,31 @@
           mineCount = 40;
           document.getElementById("gameboard").style.width = "640px";
           document.getElementById("gameboard").style.height = "640px";
+          currentLevel = 'intermediate'
         }else if(level === 'hard'){
           rows = 16;
           cols = 30;
           mineCount = 99;
           document.getElementById("gameboard").style.width = "900px";
           document.getElementById("gameboard").style.height = "480px";
+          currentLevel = 'hard'
         }
         startGame()
       }
 
-      // window.onload = function(){
-      //   startGame();
-      // }
+      function restartGame() {
+       // Reset game state
+        const gameboard = document.getElementById("gameboard");
+        gameboard.innerHTML = ""; // Clear the gameboard
+        gameboard.style.display = "none"; // Hide the board initially
+        document.getElementById("mine_count").innerText = "0"; // Reset mine count
+        gameOver = false; // Reset game-over state
+        tilesClicked = 0; // Reset clicked tiles
+        minesLocation = []; // Clear mine locations
+
+        // Restart with default or previously selected difficulty
+        setLevel(currentLevel); // You can replace 'easy' with the last selected level
+      }
       
       function startGame(){
         //Play background music
@@ -327,6 +344,20 @@
       }
       return 0;
 
+    }
+
+    //Cheat Mode 
+    function cheatMode(){
+        // Loop through the mine locations
+    minesLocation.forEach((mineId) => {
+    const mineTile = document.getElementById(mineId); // Get the mine tile by ID
+    if (mineTile) {
+      mineTile.innerText = "🚩"; // Mark the mine with a flag
+      mineTile.style.backgroundColor = "#ffd700"; // Optional: Highlight the mine tile
+    }
+    });
+     // Notify the player
+    alert("Cheat mode activated! All mines have been flagged.");
     }
 
     //Sound section
