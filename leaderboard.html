@@ -29,6 +29,194 @@
         </li>
       </ul>
     </nav>
-    <h1>Leaderboard</h1>
+
+    <main>
+      <h1>Leaderboard</h1>
+      <div class="sort-controls">
+        <span>Sort By:</span>
+        <select id="sortColumn">
+          <option value="games_won">Games Won</option>
+          <option value="games_played">Games Played</option>
+          <option value="total_time_played">Total Time Played</option>
+          <option value="easy_level">Easy Level</option>
+          <option value="intermediate_level">Intermediate Level</option>
+          <option value="hard_level">Hard Level</option>
+        </select>
+        <select id="sortOrder">
+          <option value="DESC">Descending</option>
+          <option value="ASC">Ascending</option>
+        </select>
+      </div>
+
+      <div id="leaderboardLoading" class="loading">Loading leaderboard...</div>
+      <table id="leaderboardTable" class="leaderboard" style="display:none;">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Games Played</th>
+            <th>Games Won</th>
+            <th>Total Time Played</th>
+            <th>Easy Level</th>
+            <th>Intermediate Level</th>
+            <th>Hard Level</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Leaderboard data will be dynamically inserted here -->
+        </tbody>
+      </table>
+
+      <div id="userHistorySection" style="display:none;">
+        <h2>Your Game History</h2>
+        <div id="userHistoryLoading" class="loading">Loading game history...</div>
+        <table id="userHistoryTable" style="display:none;">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Result</th>
+              <th>Time Played</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="userHistoryBody">
+            <!-- User game history will be dynamically inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+
+    </main>
+    
+    <script>
+      // Leaderboard JavaScript
+      document.addEventListener('DOMContentLoaded', () => {
+        // Function to fetch leaderboard data
+        function fetchLeaderboard(sort = 'games_won', order = 'DESC') {
+          const leaderboardLoading = document.getElementById('leaderboardLoading');
+          const leaderboardTable = document.getElementById('leaderboardTable');
+          const leaderboardBody = document.getElementById('leaderboardBody');
+
+          // Show loading, hide table
+          leaderboardLoading.style.display = 'block';
+          leaderboardTable.style.display = 'none';
+
+          fetch(`leaderboard.php?action=get_leaderboard&sort=${encodeURIComponent(sort)}&order=${encodeURIComponent(order)}`)
+            .then(response => response.json())
+            .then(data => {
+              // Clear previous data
+              leaderboardBody.innerHTML = '';
+
+              console.log(data);
+
+              if (!data.error) {
+                // Populate leaderboard
+                data.leaderboard.forEach(player => {
+                  const row = `
+                    <tr>
+                      <td>${escapeHtml(player.username)}</td>
+                      <td>${escapeHtml(player.games_played)}</td>
+                      <td>${escapeHtml(player.games_won)}</td>
+                      <td>${escapeHtml(player.total_time_played)} min</td>
+                      <td>${escapeHtml(player.easy_level)}</td>
+                      <td>${escapeHtml(player.intermediate_level)}</td>
+                      <td>${escapeHtml(player.hard_level)}</td>
+                    </tr>
+                  `;
+                  leaderboardBody.innerHTML += row;
+                });
+
+                // Hide loading, show table
+                leaderboardLoading.style.display = 'none';
+                leaderboardTable.style.display = 'table';
+              } else {
+                leaderboardLoading.textContent = 'Error loading leaderboard';
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              leaderboardLoading.textContent = 'Error loading leaderboard';
+            });
+        }
+
+        // Function to fetch user game history
+        function fetchUserHistory() {
+          const userHistorySection = document.getElementById('userHistorySection');
+          const userHistoryLoading = document.getElementById('userHistoryLoading');
+          const userHistoryTable = document.getElementById('userHistoryTable');
+          const userHistoryBody = document.getElementById('userHistoryBody');
+
+          // Show loading, hide table
+          userHistorySection.style.display = 'block';
+          userHistoryLoading.style.display = 'block';
+          userHistoryTable.style.display = 'none';
+
+          fetch('leaderboard.php?action=get_user_history')
+            .then(response => response.json())
+            .then(data => {
+              // Clear previous data
+              userHistoryBody.innerHTML = '';
+
+              if (!data.error) {
+                // Populate game history
+                if (data.game_history.length > 0) {
+                  data.game_history.forEach(game => {
+                    const row = `
+                      <tr>
+                        <td>${escapeHtml(game.level)}</td>
+                        <td>${escapeHtml(game.result)}</td>
+                        <td>${escapeHtml(game.time_played)} min</td>
+                        <td>${escapeHtml(game.game_date)}</td>
+                      </tr>
+                    `;
+                    userHistoryBody.innerHTML += row;
+                  });
+
+                  // Hide loading, show table
+                  userHistoryLoading.style.display = 'none';
+                  userHistoryTable.style.display = 'table';
+                } else {
+                  userHistoryLoading.textContent = 'No game history found';
+                  userHistoryLoading.style.display = 'block';
+                }
+              } else {
+                userHistoryLoading.textContent = data.message || 'Error loading game history';
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              userHistoryLoading.textContent = 'Error loading game history';
+            });
+        }
+
+        // Helper function to escape HTML to prevent XSS
+        function escapeHtml(unsafe) {
+          return String(unsafe)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        // Event listeners for sorting
+        document.getElementById('sortColumn').addEventListener('change', function() {
+          const sortColumn = this.value;
+          const sortOrder = document.getElementById('sortOrder').value;
+          fetchLeaderboard(sortColumn, sortOrder);
+        });
+
+        document.getElementById('sortOrder').addEventListener('change', function() {
+          const sortColumn = document.getElementById('sortColumn').value;
+          const sortOrder = this.value;
+          fetchLeaderboard(sortColumn, sortOrder);
+        });
+
+        // Initial page load
+        fetchLeaderboard();
+        fetchUserHistory();
+      });
+
+
+    </script>
   </body>
 </html>

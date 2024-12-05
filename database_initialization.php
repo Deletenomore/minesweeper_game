@@ -43,11 +43,12 @@ function createUsersTable($conn) {
 // Function to create the leaderboard table
 function createLeaderboardTable($conn) {
     $sql = "
-    CREATE TABLE leaderboard (
+    CREATE TABLE IF NOT EXISTS leaderboard (
       id INT AUTO_INCREMENT PRIMARY KEY,
       user_id INT NOT NULL,
-      score INT NOT NULL,
-      gamingtime TIME NOT NULL,
+      games_played INT NOT NULL,
+      games_won INT NOT NULL,
+      time_played TIME NOT NULL,
       level ENUM('easy', 'intermediate', 'hard') NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -60,6 +61,46 @@ function createLeaderboardTable($conn) {
     }
 }
 
+// Function to insert sample data into the users table
+function insertUsersTable($conn) {
+    $password = 'password';
+    $param_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "
+    INSERT INTO users (username, password)
+    VALUES ('admin', '$param_password'),
+           ('user1', '$param_password'),
+           ('user2', '$param_password'),
+           ('chester', '$param_password'),
+           ('deletenomore', '$param_password')
+    ";
+    
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Sample data inserted into users table.\n";
+    } else {
+        die("Error inserting data into users table: " . $conn->error);
+    }
+}
+
+// Function to insert sample data into the leaderboard table
+function insertLeaderboardTable($conn) {
+    $sql = "
+    INSERT INTO leaderboard (user_id, games_played, games_won, time_played, level)
+    VALUES (1, 20, 15, '00:02:00', 'easy'),
+           (2, 25, 18, '00:02:30', 'intermediate'),
+           (3, 30, 28, '00:07:45', 'hard'),
+           (1, 21, 16, '00:08:00', 'hard'),
+           (2, 26, 19, '00:01:30', 'easy')
+    ";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Sample data inserted into leaderboard table.\n";
+    } else {
+        die("Error inserting data into leaderboard table: " . $conn->error);
+    }
+}
+
 // Step 1: Connect to database and create it if needed
 $conn = getDBConnection($db_server, $db_username, $db_password, $dbname);
 
@@ -68,6 +109,13 @@ createUsersTable($conn);
 
 // Step 3: Create the leaderboard table
 createLeaderboardTable($conn);
+
+// Step 4: Insert sample data into the users table
+insertUsersTable($conn);
+
+// Step 5: Insert sample data into the leaderboard table
+insertLeaderboardTable($conn);
+
 
 $conn->close();
 ?>
