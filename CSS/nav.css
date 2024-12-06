@@ -2,15 +2,14 @@
 /* General styling for the navigation bar */
 
 nav {
-  background-color: #6a0dad; /* Purple background */
+  background-color: #13284c;
   border-radius: 180px 180px 180px 180px; /* Rounded edges on the left and right */
   padding: 10px 15px;
-  position: fixed; /* Fixed positioning to keep it on screen */
+  position: static; /* Fixed positioning to keep it on screen */
   top: 0;
   width: 70%; /* Reduced width to make the bar narrower */
-  /* margin: auto; */
-  left: 50%;
-  transform: translateX(-50%); /* Shift back by half its own width */
+  margin-left: auto;
+  margin-right: auto;
   z-index: 1000; /* Ensures it stays on top of other content */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
 }
@@ -38,11 +37,11 @@ nav ul li a {
 
 /* Darker hover effect for links */
 nav ul li a:hover {
-  background-color: #4e008d; /* Darker purple for hover */
+  background-color: #13284c; /* Darker purple for hover */
   color: #fff;
 }
 
 /* Active link styling */
 nav ul li a:active {
-  background-color: #3b0068; /* Even darker purple when clicked */
+  background-color: #2b3c57 /* Even darker purple when clicked */
 }

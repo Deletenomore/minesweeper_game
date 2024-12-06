@@ -8,14 +8,14 @@ body {
   height: 100vh;
   margin: 0;
   text-align: center;
-  background-color: #f3f4f6; /* Light background for contrast */
+  background-color: #b1102b; /* Light background for contrast */
 }
 
 /* Style the main heading */
 h1 {
   font-size: 3rem;
   font-weight: 700;
-  color: #6a0dad; /* Purple color */
+  color: #13284c; /* Purple color */
   margin-bottom: 40px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -29,7 +29,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap: 15px;
   margin-top: 20px;
 }
 
@@ -56,7 +56,7 @@ h1 {
   display: block;
   margin-top: 12px;
   font-size: 1.5rem;
-  color: purple;
+  color: #13284c;
   font-weight: 700 ;
   text-transform: uppercase;
   text-shadow: 2px 2px 8px rgba(102, 51, 153, 0.3);

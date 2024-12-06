@@ -20,7 +20,6 @@
      <nav>
        <ul>
          <li><a href="index.php">HOME</a></li>
-         <li><a href="login.php">LOGIN</a></li>
          <li><a href="game.html">GAME</a></li>
          <li><a href="leaderboard.html">LEADERBOARD</a></li>
          <li><a href="help.html">HELP</a></li>
@@ -95,6 +94,14 @@
       var hoveredTile = null;
       var currentLevel = '';
       var gameResult = false;
+
+       // Fetch username from PHP session
+       fetch('get_username.php')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('gamer').textContent = data.username || 'Guest';
+        })
+        .catch(error => console.error('Error fetching username:', error));
 
 
       //Member functions for the game

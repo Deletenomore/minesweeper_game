@@ -5,30 +5,99 @@
     <meta chearset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/nav.css"/>
+    <link rel="stylesheet" href="CSS/help.css">
   </head>
   <body>
-    <nav>
-      <ul>
-        <li>
-          <a href="index.php">HOME</a>
-        </li>
-        <li>
-          <a href="login.php">LOGIN</a>
-        </li>
-        <li>
-          <a href="game.html">GAME</a>
-        </li>
-        <li>
-          <a href="leaderboard.html">LEADERBOARD</a>
-        </li>
-        <li>
-          <a href="help.html">HELP</a>
-        </li>
-        <li>
-          <a href="contact.html">CONTACT</a>
-        </li>
-      </ul>
-    </nav>
-    <h1>Help Page</h1>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="game.html">GAME</a></li>
+          <li><a href="leaderboard.html">LEADERBOARD</a></li>
+          <li><a href="help.html">HELP</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+     </header>
+
+    <h1>Minesweeper Help</h1>
+
+    <div class="section">
+        <h2 class="section-title">Introduction</h2>
+        <p>
+            Minesweeper is a classic logic-based puzzle game where your goal is to clear a grid of hidden mines without detonating them. Use clues provided by the numbers on the grid to identify and flag all the mines.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Game Rules</h2>
+        <ul>
+            <li><strong>Objective:</strong> Clear the grid without clicking on any mines and mark all the mines correctly using flags.</li>
+            <li><strong>Gameplay Basics:</strong>
+                <ul>
+                    <li>The game begins with a grid of covered squares.</li>
+                    <li>Clicking a square may reveal:
+                        <ul>
+                            <li>A number (indicating how many mines are adjacent to that square).</li>
+                            <li>A blank space (indicating no adjacent mines).</li>
+                            <li>A mine (ending the game if clicked).</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Numbers as Clues:</strong> A revealed number shows how many mines are in the surrounding eight squares.</li>
+            <li><strong>Flagging Mines:</strong> If you are certain a square contains a mine, place a flag on it to mark it.</li>
+            <li><strong>Winning the Game:</strong> Reveal all non-mine squares OR correctly flag all mines to win the game.</li>
+            <li><strong>Losing the Game:</strong> Clicking on a mine ends the game immediately.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Controls</h2>
+        <ul>
+            <li><strong>Left Click:</strong> Reveal a square.</li>
+            <li><strong>Right Click:</strong> Place or remove a flag.</li>
+            <li><strong>Middle Click (Optional):</strong> Reveal adjacent squares if the correct number of flags are placed around a number.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Game Features</h2>
+        <ul>
+            <li><strong>Difficulty Levels:</strong>
+                <ul>
+                    <li>Beginner: 9x9 grid with 10 mines.</li>
+                    <li>Intermediate: 16x16 grid with 40 mines.</li>
+                    <li>Expert: 30x16 grid with 99 mines.</li>
+                </ul>
+            </li>
+            <li><strong>Custom Mode:</strong> Set your own grid size and number of mines for a personalized challenge.</li>
+            <li><strong>Timer:</strong> Keep track of how long it takes to solve the puzzle.</li>
+        </ul>
+    </div>
+
+    <div class="section tips">
+        <h2 class="section-title">Tips and Strategies</h2>
+        <ul>
+            <li>Start with the corners or edges to quickly uncover large areas.</li>
+            <li>Focus on squares with low numbers first—they are easier to deduce.</li>
+            <li>Avoid guessing if possible. Use logic to analyze the numbers and deduce mine locations.</li>
+            <li>Use flags strategically to keep track of suspected mines.</li>
+            <li>Look for patterns, such as "1-1-1" or "1-2-1," to identify mine placements.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p><strong>Q: What happens if I make a wrong flag placement?</strong></p>
+        <p>A: Nothing happens immediately, but it might lead to incorrect assumptions and clicks later in the game.</p>
+
+        <p><strong>Q: Can I restart the game?</strong></p>
+        <p>A: Yes, click the restart button to reset the grid.</p>
+
+        <p><strong>Q: Can I pause the game?</strong></p>
+        <p>A: Some versions of Minesweeper allow pausing. Check if your game includes this feature.</p>
+    </div>
+</body>
   </body>
 </html>

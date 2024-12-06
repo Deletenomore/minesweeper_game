@@ -24,18 +24,12 @@ body::before {
 }
 
 /* Responsive Header with Modern Typography */
-header {
-    margin-top: 5rem;
-    text-align: center;
-    padding: 3rem 2rem;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-}
+header{
+    background-color: #b1102b;
+    padding: 70px;
+    width: 100vw;
+   
+  }
 
 header h1 {
     font-size: 3rem;
