@@ -12,10 +12,14 @@ body {
   }
 
   header{
-    background-color: #b1102b;
-    padding: 70px;
-    width: 100vw;
-   
+    background-color:  #b1102b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
   }
   
   /* Game Container */
