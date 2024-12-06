@@ -16,6 +16,7 @@
      
    </head>
    <body>
+    <header>
      <nav>
        <ul>
          <li><a href="index.php">HOME</a></li>
@@ -26,6 +27,8 @@
          <li><a href="contact.html">CONTACT</a></li>
        </ul>
      </nav>
+    </header>
+
      <div class="game-container">
       <div class="game-header">
           <h1>Let's Play the Minesweeper Game!</h1>
@@ -34,6 +37,7 @@
           <h3>Player: <span id="gamer" name="gamer"></span></h3>
           <h4>Mines: <span id="mine_count">0</span></h4>
       </div>
+      <div id="timer">00:00:00</div>   <!--timer -->
       <div id="gameboard" style="display: none;"></div>
       <div class="difficulty-buttons">
           <button id="easy" onclick="setLevel('easy')">EASY</button>
@@ -90,6 +94,7 @@
       var gameOver = false;
       var hoveredTile = null;
       var currentLevel = '';
+      var gameResult = false;
 
 
       //Member functions for the game
@@ -134,10 +139,19 @@
         minesLocation = []; // Clear mine locations
 
         // Restart with default or previously selected difficulty
+        if(currentLevel){
         setLevel(currentLevel); // You can replace 'easy' with the last selected level
+        }else{
+        setLevel('easy');
+        }
+
+        console.log("test:", currentLevel);
+        resetTimer();
       }
       
       function startGame(){
+        //Start Timer
+        startTimer();
         //Play background music
         if(backgroundMusic){
           backgroundMusic.currentTime = 0;
@@ -260,7 +274,11 @@
 
         alert("GAME OVER");
         gameOver = true;
+        gameResult = false; // lose
+        stopTimer();
         revealMines();
+        timer = formatTime(timer);
+        submitRecord(currentLevel,timer,gameResult);
         return;
       }
 
@@ -323,6 +341,9 @@
       if(tilesClicked == rows*cols-mineCount){
         document.getElementById("mine_count").innerText = "Congratulations! You Won! Mines Cleared";
         gameOver = true;
+        gameResult = true;
+        timer = formatTime(timer);
+        submitRecord(currentLevel,timer,gameOverSound);
         // Play win sound
         if (winSound) {
           winSound.play();
@@ -372,7 +393,7 @@
       clickSound = document.getElementById('clickSound');
       mineSound = document.getElementById('mineSound');
       gameOverSound = document.getElementById('gameOverSound');
-      windSound = document.getElementById('windSound');
+      winSound = document.getElementById('winSound');
 
       //Set up volumn controls
       const backgroundMusicVolume = document.getElementById('backgroundMusicVolume');
@@ -406,6 +427,89 @@
 
     //Initialize sounds when the page loads
     window.addEventListener('load', initializeSounds);
+
+
+
+    // Timer Section
+    const timerDisplay = document.getElementById('timer');
+    let timer = 0;
+    let timerInterval;
+    let isGameStarted = false;
+
+    // Format seconds into HH:MM:SS
+    function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+      // Start the timer
+    function startTimer() {
+        if (!isGameStarted) {
+            isGameStarted = true;
+            timer = 0;
+            timerInterval = setInterval(() => {
+                timer++;
+                timerDisplay.textContent = formatTime(timer);
+            }, 1000);
+        }
+    }
+
+    // Stop the timer
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+
+    // Reset the game
+    function resetTimer() {
+        stopTimer();
+        timer = 0;
+        timerDisplay.textContent = formatTime(timer);
+        isGameStarted = false;
+      }
+
+  //function to fetch the record
+    function submitRecord(level, time, result, ){
+      const newRecord = {
+        "game_results":result,
+        "time_played": time,
+        "level":level
+      }
+      console.log(time);
+      const payload = JSON.stringify(newRecord);
+
+      let xhr = new XMLHttpRequest();
+      if(!xhr){
+        alert("XMLHttpRequest failed!")
+      }
+      xhr.onreadystatechange = ()=>{
+        try{
+        if(xhr.readyState === XMLHttpRequest.DONE){
+          if(xhr.status === 200){
+            const reponse = JSON.parse(xhr.responseText);
+            if(reponse.err === 0){
+            
+            console.log("Game record updates successfully!");
+            }
+            else{
+              console.log('There is sth wrong!');
+            }
+
+          }else{
+            console.error(`Failed to submit record: ${xhr.status} - ${xhr.statusText}`);
+          }
+        }
+        }catch(e){
+          console.error("An error occurred while submitting the record:", e.message);
+        }
+      }
+      xhr.open('POST', 'submit_record.php', true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(payload);
+
+    }
 
     </script>
  
