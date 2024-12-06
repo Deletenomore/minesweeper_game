@@ -95,6 +95,7 @@
       var hoveredTile = null;
       var currentLevel = '';
       var gameResult = false;
+      var flagCount = 0;
 
        // Fetch username from PHP session
        fetch('get_username.php')
@@ -207,13 +208,19 @@
       // Function to handle the flag by right click
       function setFlag(event) {
         event.preventDefault(); // Prevent default right-click menu
+        
         let tile = this;
-          if (tile.innerText === "") {
+          if (tile.innerText === "" && document.getElementById("mine_count").innerText > 0) {
+            flagCount++;
             tile.innerText = "🚩"; // Add flag on right-click
             flagStatus = true;
+            document.getElementById("mine_count").innerText = mineCount - flagCount;
           } else if (tile.innerText === "🚩") {
+            flagCount--;
             tile.innerText = ""; // Remove flag on right-click
             flagStatus = false;
+            //var mine_count = document.getElementById("mine_count").innerText;
+            document.getElementById("mine_count").innerText = mineCount - flagCount;
           }
           return;
 
@@ -353,7 +360,7 @@
         stopTimer();
         gameResult = true;
         timer = formatTime(timer);
-        submitRecord(currentLevel,timer,gameOverSound);
+        submitRecord(currentLevel,timer,gameResult);
         // Play win sound
         if (winSound) {
           winSound.play();
