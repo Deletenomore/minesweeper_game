@@ -6,6 +6,24 @@ body {
   color: #333;
 }
 
+header{
+  background-color: #b1102b;
+  padding: 70px;
+  width: 100vw;
+ 
+}
+
+nav{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #b1102b;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  
+}
+
 h1 {
   text-align: center;
   color: #444;
@@ -36,11 +54,4 @@ ul {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header{
-  background-color: #b1102b;
-  padding: 70px;
-  width: 100vw;
- 
 }
