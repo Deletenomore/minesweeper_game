@@ -75,10 +75,10 @@
     <!-- Volume Control -->
     <div class="volume-controls">
       <label for="backgroundMusicVolume">Background Music Volume:</label>
-      <input type="range" id="backgroundMusicVolume" min="0" max="1" step="0.1" value="0.5">
+      <input type="range" id="backgroundMusicVolume" min="0" max="1" step="0.1" value="0.3">
       
       <label for="sfxVolume">Sound Effects Volume:</label>
-      <input type="range" id="sfxVolume" min="0" max="1" step="0.1" value="0.5">
+      <input type="range" id="sfxVolume" min="0" max="1" step="0.1" value="0.3">
     </div>
 
      
@@ -350,6 +350,7 @@
         document.getElementById("mine_count").innerText = "Congratulations! You Won! Mines Cleared";
         alert("You Won!")
         gameOver = true;
+        stopTimer();
         gameResult = true;
         timer = formatTime(timer);
         submitRecord(currentLevel,timer,gameOverSound);
