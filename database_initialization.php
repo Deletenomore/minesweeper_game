@@ -46,8 +46,7 @@ function createLeaderboardTable($conn) {
     CREATE TABLE IF NOT EXISTS leaderboard (
       id INT AUTO_INCREMENT PRIMARY KEY,
       user_id INT NOT NULL,
-      games_played INT NOT NULL,
-      games_won INT NOT NULL,
+      game_results BOOLEAN NOT NULL,
       time_played TIME NOT NULL,
       level ENUM('easy', 'intermediate', 'hard') NOT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -86,12 +85,17 @@ function insertUsersTable($conn) {
 // Function to insert sample data into the leaderboard table
 function insertLeaderboardTable($conn) {
     $sql = "
-    INSERT INTO leaderboard (user_id, games_played, games_won, time_played, level)
-    VALUES (1, 20, 15, '00:02:00', 'easy'),
-           (2, 25, 18, '00:02:30', 'intermediate'),
-           (3, 30, 28, '00:07:45', 'hard'),
-           (1, 21, 16, '00:08:00', 'hard'),
-           (2, 26, 19, '00:01:30', 'easy')
+    INSERT INTO leaderboard (user_id, game_results, time_played, level)
+    VALUES (1, 1, '00:02:00', 'easy'),
+           (2, 1, '00:02:30', 'intermediate'),
+           (3, 1, '00:07:45', 'hard'),
+           (4, 1, '00:08:00', 'hard'),
+           (5, 1, '00:01:30', 'easy'),
+           (1, 0, '00:10:00', 'hard'),
+           (2, 0, '00:01:20', 'easy'),
+           (3, 0, '00:04:38', 'intermediate'),
+           (4, 0, '00:04:22', 'intermediate'),
+           (5, 0, '00:14:00', 'hard') 
     ";
 
     if ($conn->query($sql) === TRUE) {

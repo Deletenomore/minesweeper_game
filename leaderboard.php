@@ -1,18 +1,15 @@
 <?php
-// Database connection configuration
-$servername = "localhost";
-$username = "your_database_username";
-$password = "your_database_password";
-$dbname = "minesweeper_db";
-
 // Start session for user authentication
 session_start();
 
+// Database connection configuration
+require_once 'mysql_config.php';
+
 // Function to handle database connection
 function connectDatabase() {
-    global $servername, $username, $password, $dbname;
+    global $db_server, $db_username, $db_password, $dbname;
     
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($db_server, $db_username, $db_password, $dbname);
     
     if ($conn->connect_error) {
         die(json_encode([
@@ -61,15 +58,16 @@ switch($_GET['action']) {
 
         // Fetch leaderboard data
         $sql = "SELECT 
-                    username, 
-                    games_played, 
-                    games_won, 
-                    time_played, 
-                    level = 'easy' AS easy_level, 
-                    level = 'intermediate' AS intermediate_level, 
-                    level = 'hard' AS hard_level
+                    users.username, 
+                    COUNT(leaderboard.id) AS games_played, 
+                    SUM(leaderboard.game_results) AS games_won, 
+                    SEC_TO_TIME(SUM(TIME_TO_SEC(leaderboard.time_played))) AS total_time_played,
+                    SUM(CASE WHEN leaderboard.level = 'easy' THEN 1 ELSE 0 END) AS easy_level, 
+                    SUM(CASE WHEN leaderboard.level = 'intermediate' THEN 1 ELSE 0 END) AS intermediate_level, 
+                    SUM(CASE WHEN leaderboard.level = 'hard' THEN 1 ELSE 0 END) AS hard_level
                 FROM leaderboard
                 JOIN users ON leaderboard.user_id = users.id
+                GROUP BY users.username
                 ORDER BY $sortBy $order
                 LIMIT 100";
 
@@ -102,13 +100,14 @@ switch($_GET['action']) {
         
         // Fetch user's game history
         $historySql = "SELECT 
-                        level, 
-                        result, 
-                        time_played, 
-                        game_date
-                       FROM game_history 
-                       WHERE username = '$username'
-                       ORDER BY game_date DESC
+                        leaderboard.level, 
+                        IF(leaderboard.game_results = 1, 'Win', 'Loss') AS result, 
+                        leaderboard.time_played, 
+                        leaderboard.created_at AS game_date
+                       FROM leaderboard
+                       JOIN users ON leaderboard.user_id = users.id 
+                       WHERE users.username = '$username'
+                       ORDER BY leaderboard.created_at DESC
                        LIMIT 10";
         
         $historyResult = $conn->query($historySql);
