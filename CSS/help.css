@@ -3,7 +3,9 @@ body {
   line-height: 1.6;
   margin: 20px;
   background-color: #f9f9f9;
-  color: #333;
+  color: #13284c;
+  justify-content: center; 
+  text-align: center;
 }
 
 header{
@@ -13,24 +15,14 @@ header{
  
 }
 
-nav{
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #b1102b;
-  padding: 10px 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  
-}
 
 h1 {
   text-align: center;
-  color: #444;
+  color: #13284c;
 }
 
 h2, h3 {
-  color: #333;
+  color: #13284c;
 }
 
 h2.section-title {
@@ -54,4 +46,62 @@ ul {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#dogLogo{
+  border-radius: 50%;  
+  padding: 15px;
+  background-color: #13284c;
+  width: 150px;                /* Set the image size */
+  height: 150px;  
+}
+
+
+/* Styling for unordered lists within sections */
+.section ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 20px; /* Add space from the left edge */
+}
+
+/* Styling for list items */
+.section li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+/* Adding a custom bullet point style for the list items */
+.section li::before {
+  color: #13284c; /* Bullet color */
+  font-size: 20px; /* Bullet size */
+  margin-right: 10px; /* Space between bullet and text */
+}
+
+/* Style for nested lists (e.g., sub-lists) */
+.section li ul {
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+.section li ul li {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Styling for strong text inside list items */
+.section li strong {
+  color: #13284c; /* Bold text color */
+  font-weight: bold;
+}
+
+/* Styling for the tips section (optional) */
+.section.tips {
+  background-color: #e8f1f9; /* Light blue background for tips */
+  border: 1px solid #13284c;
+}
+
+/* Add hover effect to the list items for interaction */
+.section li:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
 }

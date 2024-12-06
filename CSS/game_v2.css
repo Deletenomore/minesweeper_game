@@ -180,3 +180,10 @@ body {
     }
   }
   
+  #dogLogo{
+    border-radius: 50%;  
+    padding: 15px;
+    background-color: #13284c;
+    width: 150px;                /* Set the image size */
+    height: 150px;  
+  }

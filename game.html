@@ -17,6 +17,7 @@
    </head>
    <body>
     <header>
+      <img src="images/dog.png" height="50px" alt="logo" class="img" id="dogLogo"><br>
      <nav>
         <ul>
          <li><a href="index.php">HOME</a></li>
@@ -347,6 +348,7 @@
       
       if(tilesClicked == rows*cols-mineCount){
         document.getElementById("mine_count").innerText = "Congratulations! You Won! Mines Cleared";
+        alert("You Won!")
         gameOver = true;
         gameResult = true;
         timer = formatTime(timer);

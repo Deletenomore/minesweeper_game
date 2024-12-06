@@ -1,0 +1,159 @@
+/* General Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color:  #b1102b;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+#dogLogo{
+  border-radius: 50%;  
+  padding: 15px;
+  background-color: #13284c;
+  width: 150px;                /* Set the image size */
+  height: 150px;  
+}
+
+
+/* Main Content Styling */
+main {
+  padding: 30px;
+  margin-top: 20px;
+}
+
+/* Title */
+h1 {
+  font-size: 36px;
+  color: #13284c;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Sort Controls */
+.sort-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.sort-controls span {
+  font-size: 18px;
+  color: #13284c;
+}
+
+.sort-controls select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #13284c;
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+/* Loading Text */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+  padding: 20px;
+}
+
+/* User History Section Styling */
+#userHistorySection {
+  margin-top: 40px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#userHistorySection h2 {
+  font-size: 24px;
+  color: #13284c;
+  margin-bottom: 20px;
+}
+
+#userHistorySection table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#userHistorySection th, #userHistorySection td {
+  padding: 10px;
+  text-align: left;
+}
+
+#userHistorySection th {
+  background-color: #13284c;
+  color: white;
+}
+
+#userHistorySection td {
+  background-color: #f9f9f9;
+}
+
+/* Style for Table Rows on Hover */
+tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Responsive Design for Smaller Screens */
+@media screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul li {
+    margin-bottom: 10px;
+  }
+
+  .sort-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sort-controls select {
+    margin-bottom: 10px;
+  }
+}

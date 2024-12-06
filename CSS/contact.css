@@ -5,7 +5,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     background-color: #f4f6f9;
-    color: #2c3e50;
+    color: #13284c;
     line-height: 1.7;
     text-align: center;
 }
@@ -34,7 +34,7 @@ header{
 header h1 {
     font-size: 3rem;
     font-weight: 700;
-    color: #6a0dad;
+    color: #13284c;
     margin-bottom: 1rem;
     letter-spacing: -1px;
 }
@@ -68,7 +68,7 @@ header p {
 
 .author-info h2, .description-section h2 {
     text-align: center;
-    color: #6a0dad;
+    color: #13284c;
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     position: relative;
@@ -82,7 +82,7 @@ header p {
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: #6a0dad;
+    background: #b1102b;
 }
 
 .author-info ul {
@@ -119,3 +119,11 @@ footer {
     font-size: 0.9rem;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
+
+#dogLogo{
+    border-radius: 50%;  
+    padding: 15px;
+    background-color: #13284c;
+    width: 150px;                /* Set the image size */
+    height: 150px;  
+  }
